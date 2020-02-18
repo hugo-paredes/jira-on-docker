@@ -5,7 +5,7 @@ services:
     image: atlassian/jira-software:8.2.6-ubuntu
     container_name: jira
     volumes:
-      - ./jira-data:/var/atlassian/application-data/jira
+      - ./.data/jira:/var/atlassian/application-data/jira
     ports: 
       - 8088:8080
     restart: always
@@ -17,7 +17,7 @@ services:
     container_name: jira-db
     restart: always
     volumes:
-      - ./pg-data:/var/lib/postgresql/data
+      - ./.data/postgres:/var/lib/postgresql/data
     env_file:
       - ./dev.env
     ports: 
