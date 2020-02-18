@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  jira:
+    image: atlassian/jira-software:8.2.6-ubuntu
+    container_name: jira
+    volumes:
+      - ./jira-data:/var/atlassian/application-data/jira
+    ports: 
+      - 8088:8080
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.2-alpine
+    container_name: jira-db
+    restart: always
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+    env_file:
+      - ./dev.env
+    ports: 
+      - 9999:5432
+
+  adminer:
+    image: adminer
+    container_name: db-client
+    restart: always
+    ports:
+      - 8080:8080
